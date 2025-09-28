@@ -3,7 +3,7 @@
 Clinic        # Comprehensive medical entity patterns (based on 3,959 medical records)
         self.medicine_patterns = [
             # Prescription format patterns
-            r'\b(TAB|CAP|TABLET|CAPSULE)[\.\s]+([A-Z][A-Z\s\d\-]+\d*)\b',
+            r'\b(TAB|CAP|TABLET|CAPSULE)[.\s]+([A-Z][A-Z\s\d\-]+\d*)\b',
             r'\b([A-Z][A-Z]+)\s+(\d+\s*mg|mg|mcg|g|ml|units?)\b',
             r'\b(DEMO\s+MEDICINE\s+\d+)\b',
             
