@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: mediai-disease-predictor
+    runtime: python3
+    buildCommand: |
+      # Install system dependencies
+      apt-get update && apt-get install -y \
+        tesseract-ocr \
+        tesseract-ocr-eng \
+        libglib2.0-0 \
+        libsm6 \
+        libxext6 \
+        libxrender-dev \
+        libgomp1 \
+        libglib2.0-0 \
+        libgtk-3-0 \
+        libavcodec-dev \
+        libavformat-dev \
+        libswscale-dev &&
+      # Install Python dependencies
+      pip install --upgrade pip &&
+      pip install -r requirements.txt &&
+      # Download spacy model
+      python -m spacy download en_core_web_sm &&
+      # Create necessary directories
+      mkdir -p static/uploads temp_uploads logs
+    startCommand: "gunicorn -c gunicorn.conf.py app:app"
+    plan: starter  # Change to standard/pro for better performance
+    healthCheckPath: "/health"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: PORT
+        fromService:
+          type: web
+          name: mediai-disease-predictor
+          property: port
+      - key: FLASK_ENV
+        value: "production"
+      - key: FLASK_DEBUG
+        value: "False"
+      - key: TF_CPP_MIN_LOG_LEVEL
+        value: "2"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: MODEL_CACHE_DIR
+        value: "/opt/render/project/src/models"
+    disk:
+      name: mediai-models
+      mountPath: /opt/render/project/src/models
+      sizeGB: 5  # For model storage

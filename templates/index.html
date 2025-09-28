@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediAI Disease Predictor - AI-Powered Medical Analysis</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    
+    <!-- Floating Particles -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>MediAI Predictor</h1>
+                    <p>Advanced Disease Prediction System</p>
+                </div>
+            </div>
+            <div class="status-indicator">
+                <i class="fas fa-circle status-circle"></i>
+                <span>All Systems Online</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>AI-Powered Medical Analysis</h2>
+            <p>Upload your prescription and experience the complete OCR → Clinical BERT → ML Pipeline for accurate disease prediction using advanced machine learning models.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card feature-card-delay-0">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h4>Advanced OCR</h4>
+                    <p>72.9% accuracy in prescription text extraction</p>
+                </div>
+                <div class="feature-card feature-card-delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Clinical BERT</h4>
+                    <p>Medical-grade NLP for precise analysis</p>
+                </div>
+                <div class="feature-card feature-card-delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>6 ML Models</h4>
+                    <p>89-100% accuracy on 54 disease conditions</p>
+                </div>
+                <div class="feature-card feature-card-delay-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Secure & Fast</h4>
+                    <p>Real-time processing with data protection</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <h3>
+                <span class="text-gradient">Upload Prescription Image</span>
+            </h3>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    <h3>Drag & Drop or Click to Upload</h3>
+                    <p>Supports JPG, PNG, PDF files up to 16MB</p>
+                    <button class="upload-btn" id="uploadBtn">
+                        <i class="fas fa-plus"></i> Choose File
+                    </button>
+                </div>
+                <input type="file" id="fileInput" accept="image/*,.pdf" class="hidden-input" aria-label="Upload prescription file">
+            </div>
+        </section>
+
+        <!-- Demo Section -->
+        <section class="demo-section">
+            <h3>
+                <span class="text-gradient">
+                    <i class="fas fa-flask"></i> Quick Demo
+                </span>
+            </h3>
+            <p>Test the disease prediction with a medicine name (e.g., "Amlodipine", "Metformin", "Aspirin")</p>
+            <div class="demo-input">
+                <input type="text" id="demoInput" placeholder="Enter medicine name..." />
+                <button class="demo-btn" id="demoBtn">
+                    <i class="fas fa-search"></i> Predict
+                </button>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection">
+            <div class="results-header">
+                <div class="results-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div>
+                    <h3>Analysis Complete</h3>
+                    <p>Complete pipeline processing results</p>
+                </div>
+            </div>
+
+            <!-- Pipeline Stages -->
+            <div class="pipeline-stages" id="pipelineStages">
+                <!-- Stages will be populated by JavaScript -->
+            </div>
+
+            <!-- Disease Predictions -->
+            <div id="predictionsContainer">
+                <!-- Predictions will be populated by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Processing Your Prescription</h3>
+            <p>AI is analyzing your medical data...</p>
+            
+            <div class="loading-stages">
+                <div class="loading-stage" id="stage1">
+                    <i class="fas fa-eye"></i>
+                    <span>OCR Text Recognition</span>
+                </div>
+                <div class="loading-stage" id="stage2">
+                    <i class="fas fa-pills"></i>
+                    <span>Medicine Enhancement</span>
+                </div>
+                <div class="loading-stage" id="stage3">
+                    <i class="fas fa-brain"></i>
+                    <span>Clinical BERT Analysis</span>
+                </div>
+                <div class="loading-stage" id="stage4">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Disease Prediction</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
