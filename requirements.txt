@@ -42,3 +42,6 @@ urllib3==2.1.0
 joblib==1.3.2
 tqdm==4.66.1
 filelock==3.13.1
+
+# Python Version:
+python_version >= "3.11.0"
