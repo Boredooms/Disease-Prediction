@@ -5,8 +5,8 @@ gunicorn==21.2.0
 
 # AI/ML Libraries (Python 3.13 compatible)
 tensorflow==2.20.0
-torch==2.4.0
-torchvision==0.19.0
+torch==2.5.1
+torchvision==0.20.1
 transformers==4.44.0
 scikit-learn==1.5.1
 numpy==1.26.4
