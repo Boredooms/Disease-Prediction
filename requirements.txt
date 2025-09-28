@@ -3,9 +3,9 @@
 Flask==3.0.3
 gunicorn==22.0.0
 
-# AI/ML Libraries (Python 3.13 compatible - tested together)
+# AI/ML Libraries (Python 3.13 compatible - matched dependencies)
 tensorflow==2.20.0
-torch==2.5.1
+torch==2.6.0
 torchvision==0.21.0
 transformers==4.46.2
 scikit-learn==1.5.2
