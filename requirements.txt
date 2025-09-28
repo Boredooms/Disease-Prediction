@@ -1,6 +1,4 @@
-# Python Version Requirement
-python_requires>=3.13
-
+# MediAI Disease Predictor - Python 3.13+ Compatible Packages
 # Web Framework
 Flask==3.0.0
 gunicorn==21.2.0
