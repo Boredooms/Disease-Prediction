@@ -62,20 +62,22 @@ git push -u origin main
 1. **Go to [render.com](https://render.com) and sign up/login**
 2. **Click "New +" → "Web Service"**
 3. **Connect your GitHub repository**
-4. **Configuration will be auto-detected from `render.yaml`:**
-   - **Build Command**: Installs dependencies + system packages
+4. **Manual Configuration:**
+   - **Runtime**: `Python 3`
+   - **Build Command**: `./build.sh`
    - **Start Command**: `gunicorn -c gunicorn.conf.py app:app`
-   - **Environment**: Python 3.11
    - **Plan**: Starter (upgrade to Standard for better performance)
+   - **Auto-Deploy**: Yes
 
-### 3. ⚙️ Environment Variables (Auto-configured)
+### 3. ⚙️ Environment Variables (Add these in Render dashboard)
 ```
 FLASK_ENV=production
-FLASK_DEBUG=False
+FLASK_DEBUG=False  
 TF_CPP_MIN_LOG_LEVEL=2
 PYTHONUNBUFFERED=1
-PORT=(auto-assigned by Render)
+PYTHON_VERSION=3.11
 ```
+**Note**: PORT is auto-assigned by Render
 
 ### 4. 🔧 Build Process (Automated)
 - ✅ System dependencies (Tesseract OCR, OpenCV libs)
