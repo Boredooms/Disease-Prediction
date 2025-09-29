@@ -5,7 +5,7 @@ Clinic        # Comprehensive medical entity patterns (based on 3,959 medical re
             # Prescription format patterns
             r'\b(TAB|CAP|TABLET|CAPSULE)[.\\s]+([A-Z][A-Z\\s\\d\\-]+\\d*)\b',
             r'\b([A-Z][A-Z]+)\\\\s+(\\d+\\\\s*mg|mg|mcg|g|ml|units?)\b',
-            r'\b(DEMO\\\\s+MEDICINE\\s+\\d+)\b',
+            r'\b(DEMO\\\\s+MEDICINE\\\\s+\\d+)\b',
             
             # Common drug name patterns from dataset
             r'\b(doxycycline|spironolactone|minocycline|clindamycin|tretinoin|isotretinoin)\b',
@@ -32,19 +32,19 @@ Clinic        # Comprehensive medical entity patterns (based on 3,959 medical re
             r'\b(psoriasis|rheumatoid\\\\\\s+arthritis|seizure|thyroid)\b',
             
             # Blood pressure related
-            r'\b(high\\\\s+blood\\s+pressure|blood\\s+pressure|hypertensive)\b',
-            r'\b(hypotension|low\\\\s+blood\\s+pressure)\b',
+            r'\b(high\\\\s+blood\\\\s+pressure|blood\\\\s+pressure|hypertensive)\b',
+            r'\b(hypotension|low\\\\s+blood\\\\s+pressure)\b',
             
             # Heart and cardiovascular
             r'\b(heart\\\\s+(?:disease|failure|attack)|cardiac|cardiovascular)\b',
-            r'\b(coronary\\\\s+artery\\s+disease|atrial\\s+fibrillation|arrhythmia)\b',
+            r'\b(coronary\\\\s+artery\\\\s+disease|atrial\\\\s+fibrillation|arrhythmia)\b',
             
             # Respiratory conditions
             r'\b(respiratory|lung|breathing|pulmonary|chronic\\\\s+cough)\b',
-            r'\b(shortness\\\\s+of\\s+breath|wheezing|emphysema)\b',
+            r'\b(shortness\\\\s+of\\\\s+breath|wheezing|emphysema)\b',
             
             # Pain and inflammation
-            r'\b(arthritis|joint\s+pain|muscle\s+pain|back\s+pain|chronic\s+pain)\b',
+            r'\b(arthritis|joint\\\\s+pain|muscle\\\\s+pain|back\\\\s+pain|chronic\\\\s+pain)\b',
             r'\b(inflammation|inflammatory|rheumatoid|osteoarthritis)\b',
             
             # Mental health
@@ -98,7 +98,7 @@ class ClinicalBERTProcessor:
         self.medicine_patterns = [
             r'\b(TAB|CAP|TABLET|CAPSULE)[\.\\s]+([A-Z][A-Z\\s\\d\\-]+\\d*)\b',
             r'\b([A-Z][A-Z]+)\\\\s+(\\d+\\\\s*mg|mg)\b',
-            r'\b(DEMO\\\\s+MEDICINE\\s+\\d+)\b',
+            r'\b(DEMO\\\\s+MEDICINE\\\\s+\\d+)\b',
             r'\b([A-Z]+[a-z]*)\\\\s+(\\d+\\\\s*mg)\b'
         ]
         
