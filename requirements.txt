@@ -1,17 +1,10 @@
-# MediAI Disease Predictor - Auto-versioned
+# MediAI Disease Predictor - Railway Lightweight
 Flask
-tensorflow
-torch
-torchvision
-transformers
-scikit-learn
-numpy
-pandas
-opencv-python-headless
+gunicorn
 Pillow
 pytesseract
-nltk
-textblob
+opencv-python-headless
 requests
-gunicorn
-Werkzeug
+numpy
+pandas
+scikit-learn
