@@ -1,14 +1,10 @@
-# Virtual environments
+# EXCLUDE EVERYTHING HEAVY - Ultra Aggressive
 .venv/
 venv/
 env/
-ENV/
-
-# Git
+.env*
+node_modules/
 .git/
-.gitignore
-
-# Python cache
 __pycache__/
 *.pyc
 *.pyo
@@ -16,42 +12,43 @@ __pycache__/
 .Python
 *.so
 
-# IDE
+# Large data files (CRITICAL - These are huge!)
+data/
+*.csv
+*.json
+*.zip
+*.tar.gz
+*.png
+*.jpg
+*.jpeg
+
+# Documentation and development
+README.md
+*.md
+docs/
 .vscode/
 .idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Documentation
-README.md
-docs/
-RAILWAY_DEPLOY.md
-
-# Test files
-test_*.py
-*_test.py
 tests/
+test_*
+*_test.py
 
-# Development files
-.env
-.env.local
-.env.development
-
-# Dockerfile and deployment files
+# Deployment files
 Dockerfile
 .dockerignore
 nixpacks.toml
 runtime.txt
+Aptfile
+RAILWAY_DEPLOY.md
 
-# Temporary files
+# Logs and temporary
+*.log
+logs/
 tmp/
 temp/
 uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

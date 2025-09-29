@@ -1,36 +1,37 @@
-# MediAI Disease Predictor - Optimized Railway Dockerfile
+# MediAI Disease Predictor - Ultra Lightweight for Railway
 FROM python:3.10-slim
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies for OCR and ML
+# Install only essential system dependencies
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
-    tesseract-ocr-eng \
-    libglib2.0-0 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-# Copy requirements first for better caching
-COPY requirements.txt .
+# Copy and install Python dependencies in one layer
+COPY requirements-docker.txt ./requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt \
+    && pip cache purge
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
-COPY . .
-
-# Create necessary directories
-RUN mkdir -p /app/uploads /app/temp
+# Copy only essential application files
+COPY app.py .
+COPY run_app.py .
+COPY ocr/ ./ocr/
+COPY nlp/ ./nlp/
+COPY disease_predictor/ ./disease_predictor/
+COPY templates/ ./templates/
+COPY static/ ./static/
 
 # Set environment variables
 ENV PYTHONPATH=/app
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
+ENV FLASK_ENV=production
 
 # Expose port
 EXPOSE $PORT
 
-# Run the application
-CMD gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --preload app:app
+# Simple startup
+CMD python run_app.py
