@@ -1,7 +1,6 @@
-# MediAI Disease Predictor - Python 3.13+ Compatible Packages
+# MediAI Disease Predictor - Railway Deployment
 # Web Framework
 Flask==3.0.3
-gunicorn==22.0.0
 
 # AI/ML Libraries (Python 3.13 compatible - NumPy 2.x required)
 tensorflow==2.20.0

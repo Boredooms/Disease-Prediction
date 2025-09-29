@@ -1,0 +1,16 @@
+providers = ["nixpkgs"]
+
+[phases.setup]
+nixPkgs = ["python39", "tesseract"]
+
+[phases.install]
+cmds = ["pip install -r requirements.txt"]
+
+[phases.build]
+cmds = [
+  "python -m spacy download en_core_web_sm",
+  "mkdir -p uploads static/uploads"
+]
+
+[start]
+cmd = "python run_app.py"
