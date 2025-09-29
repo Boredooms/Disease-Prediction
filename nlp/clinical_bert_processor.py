@@ -60,7 +60,7 @@ Clinic        # Comprehensive medical entity patterns (based on 3,959 medical re
             
             # Infections
             r'\b(infection|bacterial|viral|fungal|antibiotic)\b',
-            r'\b(pneumonia|bronchitis|sinusitis|uti|urinary\s+tract)\b'
+            r'\b(pneumonia|bronchitis|sinusitis|uti|urinary\\s+tract)\b'
         ]tem
 Advanced medical NLP using Clinical BERT for disease and medicine extraction
 """
