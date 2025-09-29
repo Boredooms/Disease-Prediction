@@ -4,8 +4,8 @@ Clinic        # Comprehensive medical entity patterns (based on 3,959 medical re
         self.medicine_patterns = [
             # Prescription format patterns
             r'\b(TAB|CAP|TABLET|CAPSULE)[.\\s]+([A-Z][A-Z\\s\\d\\-]+\\d*)\b',
-            r'\b([A-Z][A-Z]+)\s+(\d+\s*mg|mg|mcg|g|ml|units?)\b',
-            r'\b(DEMO\s+MEDICINE\s+\d+)\b',
+            r'\b([A-Z][A-Z]+)\\\\s+(\\d+\\\\s*mg|mg|mcg|g|ml|units?)\b',
+            r'\b(DEMO\\\\s+MEDICINE\\s+\\d+)\b',
             
             # Common drug name patterns from dataset
             r'\b(doxycycline|spironolactone|minocycline|clindamycin|tretinoin|isotretinoin)\b',
@@ -16,7 +16,7 @@ Clinic        # Comprehensive medical entity patterns (based on 3,959 medical re
             r'\b(amoxicillin|azithromycin|ciprofloxacin|levofloxacin|cephalexin|tetracycline)\b',
             
             # Generic patterns for any medicine name
-            r'\b([A-Z][a-z]+)\s+(\d+\s*mg|mg|mcg|g|ml|units?)\b',
+            r'\b([A-Z][a-z]+)\\\\s+(\\d+\\\\s*mg|mg|mcg|g|ml|units?)\b',
             r'\b([A-Z][a-z]*[A-Z][a-z]*)\b',  # CamelCase drug names
             r'\b([a-z]+[A-Z][a-z]+)\b',      # Mixed case patterns
             r'\b([A-Z]{2,})\b'               # All caps abbreviations
@@ -26,22 +26,22 @@ Clinic        # Comprehensive medical entity patterns (based on 3,959 medical re
         self.disease_patterns = [
             # Major conditions from dataset
             r'\b(acne|adhd|aids|hiv|allergies|alzheimer\'?s?|angina|anxiety|asthma)\b',
-            r'\b(bipolar\s+disorder|bronchitis|cancer|cholesterol|copd|covid\s*19?)\b',
+            r'\b(bipolar\\\\s+disorder|bronchitis|cancer|cholesterol|copd|covid\\\\s*19?)\b',
             r'\b(depression|diabetes|constipation|diarrhea|fibromyalgia|gout)\b',
             r'\b(hypertension|insomnia|migraine|obesity|osteoporosis|pneumonia)\b',
-            r'\b(psoriasis|rheumatoid\s+arthritis|seizure|thyroid)\b',
+            r'\b(psoriasis|rheumatoid\\\\\\s+arthritis|seizure|thyroid)\b',
             
             # Blood pressure related
-            r'\b(high\s+blood\s+pressure|blood\s+pressure|hypertensive)\b',
-            r'\b(hypotension|low\s+blood\s+pressure)\b',
+            r'\b(high\\\\s+blood\\s+pressure|blood\\s+pressure|hypertensive)\b',
+            r'\b(hypotension|low\\\\s+blood\\s+pressure)\b',
             
             # Heart and cardiovascular
-            r'\b(heart\s+(?:disease|failure|attack)|cardiac|cardiovascular)\b',
-            r'\b(coronary\s+artery\s+disease|atrial\s+fibrillation|arrhythmia)\b',
+            r'\b(heart\\\\s+(?:disease|failure|attack)|cardiac|cardiovascular)\b',
+            r'\b(coronary\\\\s+artery\\s+disease|atrial\\s+fibrillation|arrhythmia)\b',
             
             # Respiratory conditions
-            r'\b(respiratory|lung|breathing|pulmonary|chronic\s+cough)\b',
-            r'\b(shortness\s+of\s+breath|wheezing|emphysema)\b',
+            r'\b(respiratory|lung|breathing|pulmonary|chronic\\\\s+cough)\b',
+            r'\b(shortness\\\\s+of\\s+breath|wheezing|emphysema)\b',
             
             # Pain and inflammation
             r'\b(arthritis|joint\s+pain|muscle\s+pain|back\s+pain|chronic\s+pain)\b',
@@ -96,10 +96,10 @@ class ClinicalBERTProcessor:
         
         # Medical entity patterns (fallback)
         self.medicine_patterns = [
-            r'\b(TAB|CAP|TABLET|CAPSULE)[\.\s]+([A-Z][A-Z\s\d\-]+\d*)\b',
-            r'\b([A-Z][A-Z]+)\s+(\d+\s*mg|mg)\b',
-            r'\b(DEMO\s+MEDICINE\s+\d+)\b',
-            r'\b([A-Z]+[a-z]*)\s+(\d+\s*mg)\b'
+            r'\b(TAB|CAP|TABLET|CAPSULE)[\.\\s]+([A-Z][A-Z\\s\\d\\-]+\\d*)\b',
+            r'\b([A-Z][A-Z]+)\\\\s+(\\d+\\\\s*mg|mg)\b',
+            r'\b(DEMO\\\\s+MEDICINE\\s+\\d+)\b',
+            r'\b([A-Z]+[a-z]*)\\\\s+(\\d+\\\\s*mg)\b'
         ]
         
         self.disease_patterns = [
