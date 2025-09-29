@@ -17,8 +17,19 @@ from datetime import datetime
 # Import our disease prediction system components
 from ocr.direct_prescription_reader import DirectPrescriptionReader
 from ocr.smart_medicine_enhancer import SmartMedicineEnhancer
-from nlp.clinical_bert_processor import ClinicalBERTProcessor
-from disease_predictor.disease_prediction_system import AdvancedDiseasePredictor
+
+# Try to import heavy ML components (optional for lightweight deployment)
+try:
+    from nlp.clinical_bert_processor import ClinicalBERTProcessor
+    from disease_predictor.disease_prediction_system import AdvancedDiseasePredictor
+    ML_AVAILABLE = True
+    print("✅ Heavy ML models available")
+except ImportError as e:
+    ClinicalBERTProcessor = None
+    AdvancedDiseasePredictor = None
+    ML_AVAILABLE = False
+    print(f"⚠️  Heavy ML models not available: {e}")
+    print("🚀 Running in lightweight OCR-only mode")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -44,14 +55,20 @@ try:
     ocr_reader = DirectPrescriptionReader()
     medicine_enhancer = SmartMedicineEnhancer()
     
-    logger.info("Initializing Clinical BERT processor...")
-    bert_processor = ClinicalBERTProcessor()
-    
-    logger.info("Initializing Disease Prediction system...")
-    disease_predictor = AdvancedDiseasePredictor()
-    disease_predictor.load_models()
-    
-    logger.info("All systems initialized successfully!")
+    # Initialize ML components only if available
+    if ML_AVAILABLE:
+        logger.info("Initializing Clinical BERT processor...")
+        bert_processor = ClinicalBERTProcessor()
+        
+        logger.info("Initializing Disease Prediction system...")
+        disease_predictor = AdvancedDiseasePredictor()
+        disease_predictor.load_models()
+        
+        logger.info("All systems initialized successfully!")
+    else:
+        bert_processor = None
+        disease_predictor = None
+        logger.info("OCR systems initialized successfully! (ML components unavailable)")
     
 except Exception as e:
     logger.error(f"Failed to initialize systems: {str(e)}")
@@ -118,7 +135,17 @@ def upload_prescription():
             if enhanced_medicine_names:
                 enhanced_text += f"\n\nEnhanced Medicines: {', '.join(enhanced_medicine_names)}"
         
-        clinical_analysis = bert_processor.process_prescription_text(enhanced_text)
+        # Stage 3: Clinical BERT Analysis (if available)
+        clinical_analysis = {}
+        if bert_processor:
+            clinical_analysis = bert_processor.process_prescription_text(enhanced_text)
+        else:
+            clinical_analysis = {
+                'entities': [],
+                'symptoms': [],
+                'conditions': [],
+                'note': 'Clinical BERT analysis not available in lightweight mode'
+            }
         
         # Stage 4: Disease Prediction
         logger.info("Stage 4: Disease Prediction...")
@@ -152,7 +179,7 @@ def upload_prescription():
         
         # Get disease predictions using the comprehensive prediction system
         disease_predictions = []
-        if unique_medicines and hasattr(disease_predictor, 'models'):
+        if unique_medicines and disease_predictor and hasattr(disease_predictor, 'models'):
             try:
                 # Prepare proper OCR and NLP data structure for prediction
                 ocr_for_prediction = {
@@ -188,6 +215,8 @@ def upload_prescription():
                 
                 # Fallback: try individual medicine predictions if available
                 for medicine in unique_medicines:
+                    if not disease_predictor:
+                        break
                     try:
                         # Try to use medicine to symptoms mapping if available
                         if hasattr(disease_predictor, 'drug_to_symptoms') and medicine.upper() in disease_predictor.drug_to_symptoms:
@@ -226,6 +255,8 @@ def upload_prescription():
         # Prepare response
         response_data = {
             'success': True,
+            'mode': 'full' if ML_AVAILABLE else 'ocr_only',
+            'message': 'Complete OCR + Clinical BERT + ML Pipeline' if ML_AVAILABLE else 'OCR-only mode (ML models not available)',
             'timestamp': datetime.now().isoformat(),
             'stages': {
                 'ocr': {
@@ -288,8 +319,15 @@ def demo_prediction():
         
         logger.info(f"Demo prediction for: {medicine_name}")
         
-        # Get predictions
-        predictions = disease_predictor.predict_disease_from_medicine(medicine_name)
+        # Get predictions (if ML models available)
+        if disease_predictor:
+            predictions = disease_predictor.predict_disease_from_medicine(medicine_name)
+        else:
+            predictions = [{
+                'disease': 'ML models not available',
+                'confidence': 0.0,
+                'note': 'Running in lightweight OCR-only mode'
+            }]
         
         response_data = {
             'success': True,
