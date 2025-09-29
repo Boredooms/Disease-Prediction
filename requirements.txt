@@ -8,3 +8,21 @@ requests
 numpy
 pandas
 scikit-learn
+ 
+# MediAI Disease Predictor - Auto-versioned
+Flask
+tensorflow
+torch
+torchvision
+transformers
+scikit-learn
+numpy
+pandas
+opencv-python-headless
+Pillow
+pytesseract
+nltk
+textblob
+requests
+gunicorn
+Werkzeug
