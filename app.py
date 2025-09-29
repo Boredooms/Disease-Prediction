@@ -62,6 +62,11 @@ def index():
     """Main page with stunning dark interface"""
     return render_template('index.html')
 
+@app.route('/ping')
+def ping():
+    """Simple ping endpoint for quick health checks"""
+    return jsonify({'status': 'ok', 'message': 'MediAI Disease Predictor is running'})
+
 @app.route('/upload', methods=['POST'])
 def upload_prescription():
     """Handle prescription image upload and process through complete pipeline"""
