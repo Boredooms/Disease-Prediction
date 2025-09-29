@@ -1,14 +1,17 @@
-# MediAI Disease Predictor - Railway Optimized
+# MediAI Disease Predictor - Auto-versioned
 Flask
-gunicorn
-Pillow
-pytesseract
-opencv-python-headless
-requests
-numpy
-pandas
-scikit-learn
 tensorflow
 torch
+torchvision
 transformers
+scikit-learn
+numpy
+pandas
+opencv-python-headless
+Pillow
+pytesseract
 nltk
+textblob
+requests
+gunicorn
+Werkzeug
