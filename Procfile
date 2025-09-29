@@ -1,1 +1,1 @@
-web: gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --graceful-timeout 300 --worker-class sync --max-requests 100 --preload-app --access-logfile - --error-logfile - --log-level info app:app
+web: gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --graceful-timeout 300 --worker-class sync --max-requests 100 --access-logfile - --error-logfile - --log-level info app:app

@@ -34,7 +34,6 @@ exec gunicorn \
     --graceful-timeout 300 \
     --worker-class sync \
     --max-requests 100 \
-    --preload-app \
     --access-logfile - \
     --error-logfile - \
     --log-level info \

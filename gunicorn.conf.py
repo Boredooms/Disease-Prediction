@@ -25,8 +25,8 @@ worker_class = "sync"
 max_requests = 100
 max_requests_jitter = 10
 
-# Preload application for faster responses
-preload_app = True
+# Preload application disabled for compatibility
+# preload_app = True
 
 # Enable detailed logging
 accesslog = "-"
