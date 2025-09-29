@@ -1,2 +1,5 @@
+[phases.build]
+cmds = ["echo 'Using custom Dockerfile for build'"]
+
 [start]
-cmd = "gunicorn --bind 0.0.0.0:$PORT app:app"
+cmd = "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --preload app:app"

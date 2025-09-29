@@ -33,7 +33,7 @@ logs/
 # Documentation
 README.md
 docs/
-*.md
+RAILWAY_DEPLOY.md
 
 # Test files
 test_*.py
@@ -45,10 +45,13 @@ tests/
 .env.local
 .env.development
 
-# Large data files (if any)
-*.zip
-*.tar.gz
+# Dockerfile and deployment files
+Dockerfile
+.dockerignore
+nixpacks.toml
+runtime.txt
 
 # Temporary files
 tmp/
 temp/
+uploads/
