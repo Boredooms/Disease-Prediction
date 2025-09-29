@@ -48,15 +48,15 @@ Clinic        # Comprehensive medical entity patterns (based on 3,959 medical re
             r'\b(inflammation|inflammatory|rheumatoid|osteoarthritis)\b',
             
             # Mental health
-            r'\b(anxiety\s+disorder|panic\s+disorder|social\s+anxiety)\b',
-            r'\b(major\s+depression|clinical\s+depression|mood\s+disorder)\b',
+            r'\b(anxiety\\s+disorder|panic\\s+disorder|social\\s+anxiety)\b',
+            r'\b(major\\s+depression|clinical\\s+depression|mood\\s+disorder)\b',
             
             # Diabetes related
-            r'\b(diabetes\s+(?:type\s+[12]|mellitus)|diabetic|insulin\s+resistance)\b',
-            r'\b(blood\s+sugar|glucose|hyperglycemia|hypoglycemia)\b',
+            r'\b(diabetes\\s+(?:type\\s+[12]|mellitus)|diabetic|insulin\\s+resistance)\b',
+            r'\b(blood\\s+sugar|glucose|hyperglycemia|hypoglycemia)\b',
             
             # Skin conditions
-            r'\b(skin\s+condition|dermatitis|eczema|rash|hives|urticaria)\b',
+            r'\b(skin\\s+condition|dermatitis|eczema|rash|hives|urticaria)\b',
             
             # Infections
             r'\b(infection|bacterial|viral|fungal|antibiotic)\b',
