@@ -1,0 +1,54 @@
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Git
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Documentation
+README.md
+docs/
+*.md
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Development files
+.env
+.env.local
+.env.development
+
+# Large data files (if any)
+*.zip
+*.tar.gz
+
+# Temporary files
+tmp/
+temp/

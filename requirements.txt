@@ -1,44 +1,24 @@
-# MediAI Disease Predictor - Railway Deployment
-# Web Framework
+# MediAI Disease Predictor - Railway Optimized
 Flask==3.0.3
 
-# AI/ML Libraries (Python 3.13 compatible - NumPy 2.x required)
-tensorflow==2.20.0
-torch==2.6.0
-torchvision==0.21.0
-transformers==4.46.2
-scikit-learn==1.5.2
-numpy>=2.1.0
-pandas==2.2.3
+# Core ML Libraries - Railway optimized
+tensorflow-cpu==2.15.0
+torch==2.1.0
+torchvision==0.16.0
+transformers==4.35.0
+scikit-learn==1.3.2
+numpy==1.24.3
+pandas==2.1.4
 
-# OCR & Image Processing (Python 3.13 compatible)
-opencv-python-headless>=4.10.0
-Pillow>=10.4.0
-pytesseract>=0.3.13
-easyocr>=1.7.2
+# OCR & Image Processing - Lightweight
+opencv-python-headless==4.8.1.78
+Pillow==10.1.0
+pytesseract==0.3.10
 
-# NLP & Medical Processing (Python 3.13 compatible)
-spacy>=3.8.2
-nltk>=3.9.1
-textblob>=0.18.0
+# NLP Processing
+nltk==3.8.1
+textblob==0.17.1
 
-# Utilities (Latest compatible versions)
-requests==2.32.3
-python-dotenv==1.0.1
-Werkzeug==3.0.4
-Jinja2==3.1.4
-MarkupSafe==2.1.5
-itsdangerous==2.2.0
-click==8.1.7
-
-# Production Dependencies (Latest)
-blinker==1.8.2
-certifi==2024.8.30
-charset-normalizer==3.4.0
-idna==3.10
-urllib3==2.2.3
-
-# For model loading and caching (Latest)
-joblib==1.4.2
-tqdm==4.66.5
-filelock==3.16.1
+# Essential utilities
+requests==2.31.0
+Werkzeug==3.0.1
