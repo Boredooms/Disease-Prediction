@@ -29,6 +29,11 @@ python -m spacy download en_core_web_sm
 
 # Create necessary directories
 echo "📁 Creating directories..."
-mkdir -p static/uploads temp_uploads logs
+mkdir -p static/uploads temp_uploads logs uploads
+
+# Set proper permissions for startup script
+echo "🔧 Setting permissions..."
+chmod +x start.sh
 
 echo "✅ Build complete! Ready to start application."
+echo "🌟 Application will be started with gunicorn on port $PORT"

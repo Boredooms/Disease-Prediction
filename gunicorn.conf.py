@@ -4,7 +4,40 @@ import os
 import multiprocessing
 
 # Render.com configuration
-bind = f"0.0.0.0:{os.environ.get('PORT', '5000')}"
+import os
+
+# Bind to the port provided by the environment variable
+port = os.environ.get('PORT', '5000')
+bind = f"0.0.0.0:{port}"
+
+# Single worker for simplicity and ML model loading
+workers = 1
+
+# Worker timeout - set higher for ML processing
+timeout = 300
+graceful_timeout = 300
+keepalive = 2
+
+# Worker class
+worker_class = "sync"
+
+# Maximum requests per worker before restarting
+max_requests = 100
+max_requests_jitter = 10
+
+# Preload application for faster responses
+preload_app = True
+
+# Enable detailed logging
+accesslog = "-"
+errorlog = "-"
+loglevel = "info"
+capture_output = True
+enable_stdio_inheritance = True
+
+# Additional configuration
+worker_connections = 1000
+backlog = 2048
 workers = 1  # Single worker for starter plan
 threads = 2
 max_requests = 1000
