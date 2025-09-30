@@ -6,6 +6,7 @@ Stunning dark-themed interface with OCR → Clinical BERT → ML Pipeline
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 import os
+import sys
 import tempfile
 import base64
 from PIL import Image
@@ -13,6 +14,14 @@ import io
 import traceback
 import logging
 from datetime import datetime
+import time
+
+# Startup timing for debugging
+STARTUP_START_TIME = time.time()
+print(f"🚀 MediAI Startup Begin - {datetime.now().isoformat()}")
+print(f"🐍 Python: {sys.version.split()[0]}")
+print(f"📂 Working Directory: {os.getcwd()}")
+print(f"🌐 PORT: {os.environ.get('PORT', 'not set')}")
 
 # Import our disease prediction system components
 from ocr.direct_prescription_reader import DirectPrescriptionReader
@@ -73,6 +82,11 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize systems: {str(e)}")
     traceback.print_exc()
+
+# Log startup completion
+startup_time = time.time() - STARTUP_START_TIME
+print(f"⏱️  Startup completed in {startup_time:.1f}s")
+print(f"🎉 MediAI ready to serve - {datetime.now().isoformat()}")
 
 @app.route('/')
 def index():
@@ -367,4 +381,5 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     print(f"🚀 Starting MediAI Disease Predictor on port {port}")
     print(f"🔗 Binding to 0.0.0.0:{port}")
+    print(f"🌐 Ready to accept connections...")
     app.run(debug=False, host='0.0.0.0', port=port)
