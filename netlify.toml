@@ -8,9 +8,6 @@
   FAST_START = "false"
   PYTHONUNBUFFERED = "1"
   NODE_VERSION = "18"
-  # Increase memory and timeout for heavy ML builds
-  AWS_LAMBDA_FUNCTION_MEMORY_SIZE = "3008"
-  AWS_LAMBDA_FUNCTION_TIMEOUT = "900"
 
 [functions]
   # Configure for heavy ML workloads
