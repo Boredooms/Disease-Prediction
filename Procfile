@@ -1,1 +1,1 @@
-web: python run_app.pyweb: python run_app.pyweb: python run_app.py
+web: gunicorn --bind 0.0.0.0:$PORT app:app --timeout 120 --workers 1web: python run_app.pyweb: python run_app.pyweb: python run_app.py
