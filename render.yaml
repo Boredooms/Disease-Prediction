@@ -2,7 +2,7 @@ services:
   - type: web
     name: mediai-disease-predictor
     runtime: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements-light.txt
     startCommand: gunicorn --bind 0.0.0.0:$PORT app:app --timeout 120 --workers 1
     plan: free
     envVars:

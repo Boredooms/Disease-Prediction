@@ -24,8 +24,16 @@ print(f"📂 Working Directory: {os.getcwd()}")
 print(f"🌐 PORT: {os.environ.get('PORT', 'not set')}")
 
 # Import our disease prediction system components
-from ocr.direct_prescription_reader import DirectPrescriptionReader
-from ocr.smart_medicine_enhancer import SmartMedicineEnhancer
+try:
+    from ocr.direct_prescription_reader import DirectPrescriptionReader
+    from ocr.smart_medicine_enhancer import SmartMedicineEnhancer
+    OCR_AVAILABLE = True
+    print("✅ OCR components available")
+except ImportError as e:
+    DirectPrescriptionReader = None
+    SmartMedicineEnhancer = None
+    OCR_AVAILABLE = False
+    print(f"⚠️  OCR components not available: {e}")
 
 # Try to import heavy ML components (optional for lightweight deployment)
 FAST_START = os.environ.get('FAST_START', 'false').lower() == 'true'
@@ -68,10 +76,16 @@ def static_files(filename):
 
 # Initialize our prediction system
 try:
-    # Initialize all components
-    logger.info("Initializing OCR system...")
-    ocr_reader = DirectPrescriptionReader()
-    medicine_enhancer = SmartMedicineEnhancer()
+    # Initialize OCR components if available
+    if OCR_AVAILABLE:
+        logger.info("Initializing OCR system...")
+        ocr_reader = DirectPrescriptionReader()
+        medicine_enhancer = SmartMedicineEnhancer()
+        logger.info("OCR systems initialized successfully!")
+    else:
+        ocr_reader = None
+        medicine_enhancer = None
+        logger.warning("OCR systems not available")
     
     # Initialize ML components only if available and not in FAST_START mode
     if ML_AVAILABLE and not FAST_START:
@@ -87,9 +101,9 @@ try:
         bert_processor = None
         disease_predictor = None
         if FAST_START:
-            logger.info("OCR systems initialized successfully! (FAST_START mode - ML models skipped)")
+            logger.info("FAST_START mode - ML models skipped")
         else:
-            logger.info("OCR systems initialized successfully! (ML components unavailable)")
+            logger.info("ML components unavailable")
     
 except Exception as e:
     logger.error(f"Failed to initialize systems: {str(e)}")
@@ -133,11 +147,17 @@ def upload_prescription():
         
         # Stage 1: OCR Processing
         logger.info("Stage 1: OCR Processing...")
-        ocr_result = ocr_reader.read_prescription(filepath)
+        if ocr_reader:
+            ocr_result = ocr_reader.read_prescription(filepath)
+        else:
+            ocr_result = {'full_image': {'text': 'OCR not available', 'confidence': 0}}
         
         # Stage 2: Medicine Enhancement
         logger.info("Stage 2: Medicine Enhancement...")
-        enhanced_medicines = medicine_enhancer.smart_ocr_with_enhancement(filepath)
+        if medicine_enhancer:
+            enhanced_medicines = medicine_enhancer.smart_ocr_with_enhancement(filepath)
+        else:
+            enhanced_medicines = {'medicines': [], 'total_found': 0}
         
         # Stage 3: Clinical BERT Processing
         logger.info("Stage 3: Clinical BERT Processing...")
@@ -376,7 +396,7 @@ def health_check():
         'timestamp': datetime.now().isoformat(),
         'mode': 'fast_start' if FAST_START else ('full_ml' if ML_AVAILABLE else 'ocr_only'),
         'systems': {
-            'ocr': 'ready',
+            'ocr': 'ready' if OCR_AVAILABLE else 'unavailable',
             'clinical_bert': 'ready' if (ML_AVAILABLE and not FAST_START) else 'skipped',
             'disease_predictor': 'ready' if (ML_AVAILABLE and not FAST_START) else 'skipped'
         }
