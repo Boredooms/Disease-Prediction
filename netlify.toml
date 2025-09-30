@@ -13,6 +13,16 @@
   node_bundler = "esbuild"
 
 [[redirects]]
+  from = "/test"
+  to = "/.netlify/functions/test"
+  status = 200
+
+[[redirects]]
+  from = "/fast"
+  to = "/.netlify/functions/app-fast"
+  status = 200
+
+[[redirects]]
   from = "/static/*"
   to = "/static/:splat"
   status = 200
