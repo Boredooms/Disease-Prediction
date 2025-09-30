@@ -1,0 +1,19 @@
+[build]
+  command = "pip install -r requirements.txt"
+  functions = "netlify/functions"
+  publish = "static"
+
+[build.environment]
+  PYTHON_VERSION = "3.10"
+  FAST_START = "false"
+  PYTHONUNBUFFERED = "1"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/app"
+  status = 200

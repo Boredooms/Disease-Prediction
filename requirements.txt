@@ -1,4 +1,4 @@
-# MediAI Disease Predictor - Auto-versioned
+# Full ML requirements (for local development or paid hosting)
 Flask
 tensorflow
 torch
