@@ -61,7 +61,11 @@ else:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+# Create Flask app with proper template and static folders
+app = Flask(__name__, 
+           template_folder='templates',
+           static_folder='static',
+           static_url_path='/static')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['UPLOAD_FOLDER'] = 'temp_uploads'
 

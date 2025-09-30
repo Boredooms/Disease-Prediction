@@ -7,10 +7,14 @@
   PYTHON_VERSION = "3.10"
   FAST_START = "false"
   PYTHONUNBUFFERED = "1"
+  NODE_VERSION = "18"
+
+[functions]
+  node_bundler = "esbuild"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  from = "/static/*"
+  to = "/static/:splat"
   status = 200
 
 [[redirects]]
