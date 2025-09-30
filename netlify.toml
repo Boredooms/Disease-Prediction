@@ -15,10 +15,6 @@
 [functions]
   # Configure for heavy ML workloads
   node_bundler = "esbuild"
-  
-[[functions]]
-  path = "netlify/functions/*"
-  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/static/*"
