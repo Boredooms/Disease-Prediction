@@ -1,24 +1,17 @@
-# Lightweight requirements for Netlify deployment
-# Heavy ML libraries might be causing deployment issues
-
-# Core Flask
-Flask==2.3.3
-Werkzeug==2.3.7
-gunicorn==21.2.0
-
-# Basic image processing (lightweight)
-Pillow==10.0.1
-
-# Essential utilities
-numpy==1.24.3
-requests==2.31.0
-
-# Optional: Add these gradually if needed
-# opencv-python-headless==4.8.1.78  # Smaller than full opencv
-# pytesseract==0.3.10
-
-# Heavy ML libraries (comment out for testing)
-# tensorflow==2.13.0
-# torch==2.0.1
-# transformers==4.33.2
-# scikit-learn==1.3.0
+# Full ML requirements (for local development or paid hosting)
+Flask
+tensorflow
+torch
+torchvision
+transformers
+scikit-learn
+numpy
+pandas
+opencv-python-headless
+Pillow
+pytesseract
+nltk
+textblob
+requests
+Werkzeug
+gunicorn

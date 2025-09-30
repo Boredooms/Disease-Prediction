@@ -1,6 +1,7 @@
 import sys
 import os
 from io import StringIO
+import json
 
 # Add the project root to Python path
 project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -9,14 +10,47 @@ sys.path.insert(0, project_root)
 # Set working directory to project root
 os.chdir(project_root)
 
-# Import Flask app
-from app import app
+# Configure for heavy ML deployment
+os.environ['PYTHONUNBUFFERED'] = '1'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Reduce TensorFlow logs
+
+# Global app instance for cold start optimization
+app_instance = None
+
+def get_app():
+    """Get or create Flask app instance (singleton for cold start optimization)"""
+    global app_instance
+    if app_instance is None:
+        try:
+            # Import Flask app with full ML stack
+            from app import app
+            app_instance = app
+            print("✅ Flask app with full ML stack loaded successfully")
+        except Exception as e:
+            print(f"❌ Failed to load Flask app: {str(e)}")
+            # Create minimal fallback app
+            from flask import Flask
+            app_instance = Flask(__name__)
+            
+            @app_instance.route('/')
+            def error_page():
+                return f'''
+                <h1>⚠️ ML Models Loading Error</h1>
+                <p>Error: {str(e)}</p>
+                <p>The full ML pipeline could not be loaded. This might be due to memory constraints.</p>
+                '''
+    
+    return app_instance
 
 def handler(event, context):
     """
-    Netlify Functions handler for Flask app
+    Netlify Functions handler for Flask app with FULL ML STACK
+    Optimized for TensorFlow + PyTorch + Clinical BERT
     """
     try:
+        # Get Flask app instance
+        app = get_app()
+        
         # Handle different path formats
         path = event.get('path', '/')
         if path.startswith('/.netlify/functions/app'):
@@ -101,8 +135,25 @@ def handler(event, context):
     except Exception as e:
         import traceback
         error_details = traceback.format_exc()
+        print(f"❌ Function error: {str(e)}")
+        print(f"❌ Traceback: {error_details}")
+        
         return {
             'statusCode': 500,
-            'headers': {'Content-Type': 'application/json'},
-            'body': f'{{"error": "Internal server error", "details": "{str(e)}", "traceback": "{error_details.replace('"', '\\\\\\\\\\\\\\\\\'')}"\'}}'
+            'headers': {'Content-Type': 'text/html'},
+            'body': f'''
+            <html>
+            <head><title>🏥 MediAI - Loading Error</title></head>
+            <body style="font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px;">
+                <h1>🏥 MediAI Disease Predictor</h1>
+                <h2>⚠️ Heavy ML Models Loading...</h2>
+                <p><strong>Status:</strong> The full ML pipeline (TensorFlow + PyTorch + Clinical BERT) is loading.</p>
+                <p><strong>Error:</strong> {str(e)}</p>
+                <p><strong>This is normal for the first request!</strong> Heavy ML models take time to load on serverless platforms.</p>
+                <p>Please refresh in 1-2 minutes for the complete OCR → Clinical BERT → Disease Prediction pipeline.</p>
+                <hr>
+                <p><small>Full error: {error_details.replace('<', '&lt;').replace('>', '&gt;')}</small></p>
+            </body>
+            </html>
+            '''
         }
