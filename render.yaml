@@ -10,4 +10,6 @@ services:
         value: "1"
       - key: FLASK_ENV
         value: production
+      - key: GUNICORN_CMD_ARGS
+        value: "--bind 0.0.0.0:$PORT --timeout 300 --workers 1 --log-level info --access-logfile - --error-logfile -"
     healthCheckPath: /health
