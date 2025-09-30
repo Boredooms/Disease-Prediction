@@ -28,17 +28,26 @@ from ocr.direct_prescription_reader import DirectPrescriptionReader
 from ocr.smart_medicine_enhancer import SmartMedicineEnhancer
 
 # Try to import heavy ML components (optional for lightweight deployment)
-try:
-    from nlp.clinical_bert_processor import ClinicalBERTProcessor
-    from disease_predictor.disease_prediction_system import AdvancedDiseasePredictor
-    ML_AVAILABLE = True
-    print("✅ Heavy ML models available")
-except ImportError as e:
+FAST_START = os.environ.get('FAST_START', 'false').lower() == 'true'
+
+if FAST_START:
+    print("⚡ FAST_START enabled - skipping heavy ML models for quick startup")
     ClinicalBERTProcessor = None
     AdvancedDiseasePredictor = None
     ML_AVAILABLE = False
-    print(f"⚠️  Heavy ML models not available: {e}")
-    print("🚀 Running in lightweight OCR-only mode")
+    print("🚀 Running in lightweight OCR-only mode for fast startup")
+else:
+    try:
+        from nlp.clinical_bert_processor import ClinicalBERTProcessor
+        from disease_predictor.disease_prediction_system import AdvancedDiseasePredictor
+        ML_AVAILABLE = True
+        print("✅ Heavy ML models available")
+    except ImportError as e:
+        ClinicalBERTProcessor = None
+        AdvancedDiseasePredictor = None
+        ML_AVAILABLE = False
+        print(f"⚠️  Heavy ML models not available: {e}")
+        print("🚀 Running in lightweight OCR-only mode")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -64,8 +73,8 @@ try:
     ocr_reader = DirectPrescriptionReader()
     medicine_enhancer = SmartMedicineEnhancer()
     
-    # Initialize ML components only if available
-    if ML_AVAILABLE:
+    # Initialize ML components only if available and not in FAST_START mode
+    if ML_AVAILABLE and not FAST_START:
         logger.info("Initializing Clinical BERT processor...")
         bert_processor = ClinicalBERTProcessor()
         
@@ -77,7 +86,10 @@ try:
     else:
         bert_processor = None
         disease_predictor = None
-        logger.info("OCR systems initialized successfully! (ML components unavailable)")
+        if FAST_START:
+            logger.info("OCR systems initialized successfully! (FAST_START mode - ML models skipped)")
+        else:
+            logger.info("OCR systems initialized successfully! (ML components unavailable)")
     
 except Exception as e:
     logger.error(f"Failed to initialize systems: {str(e)}")
@@ -362,10 +374,11 @@ def health_check():
     return jsonify({
         'status': 'healthy',
         'timestamp': datetime.now().isoformat(),
+        'mode': 'fast_start' if FAST_START else ('full_ml' if ML_AVAILABLE else 'ocr_only'),
         'systems': {
             'ocr': 'ready',
-            'clinical_bert': 'ready',
-            'disease_predictor': 'ready'
+            'clinical_bert': 'ready' if (ML_AVAILABLE and not FAST_START) else 'skipped',
+            'disease_predictor': 'ready' if (ML_AVAILABLE and not FAST_START) else 'skipped'
         }
     })
 
